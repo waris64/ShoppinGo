@@ -3,25 +3,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { remove } from '../store/cartSlice'
 import { CiShoppingCart } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
+import Toast,{Toaster} from 'react-hot-toast'
 const Cart = () => {
   const cartProducts = useSelector(state => state.cart)
   const dispatch = useDispatch();
+  const removeProduct = () => Toast.success("Product removed");
   const removeToCart = (id) => {
     dispatch(remove(id));
+    removeProduct();
   }
+
 
   return (
     <div>
-      {/* <span className='font-semibold '>
-        <Link to="/cart" className=''>
-        <span className='pt-4 pl-3 absolute font-semibold'>
-          <span className='pl-2'>
-            {cartProducts.length}
-          </span>
-        </span>
-        <CiShoppingCart className='size-14  bg-gray-200 rounded-2xl ' />
-        </Link>
-        </span> */}
+      <Toaster/>
       <div className='flex flex-wrap justify-center  '>
         
 
