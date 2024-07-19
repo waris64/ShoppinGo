@@ -1,19 +1,18 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Provider, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import NavBarPanel from './NavBarPanel';
-import { CiShoppingCart } from 'react-icons/ci';
 import store from '../store/store';
 
 const RootLayout = () => {
   return (
     <Provider store={store}>
-    <> 
-      <NavBarPanel />
-      <main className='flex flex-row-reverse'>
-        <Outlet />
-      </main>
-    </>
+      <>
+        <NavBarPanel />
+        <main className='flex flex-row-reverse'>
+          <Outlet />
+        </main>
+      </>
     </Provider>
   );
 }

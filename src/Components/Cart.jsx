@@ -1,48 +1,74 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { remove } from '../store/cartSlice'
-import { CiShoppingCart } from 'react-icons/ci'
-import { Link } from 'react-router-dom'
-import Toast,{Toaster} from 'react-hot-toast'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { remove, increment, decrement } from '../store/cartSlice';
+import Toast, { Toaster } from 'react-hot-toast';
+import { MdOutlineRemoveCircle } from "react-icons/md";
+
 const Cart = () => {
-  const cartProducts = useSelector(state => state.cart)
+  const cartProducts = useSelector(state => state.cart);
   const dispatch = useDispatch();
-  const removeProduct = () => Toast.success("Product removed");
+
   const removeToCart = (id) => {
     dispatch(remove(id));
-    removeProduct();
-  }
+    Toast.success("Product removed");
+  };
 
+  const incrementQuantity = (id) => {
+    dispatch(increment(id));
+  };
+
+  const decrementQuantity = (id) => {
+    dispatch(decrement(id));
+  };
+
+  const totalCartPrice = cartProducts.reduce((total, product) => total + (product.price * product.quantity), 0);
 
   return (
-    <div>
-      <Toaster/>
-      <div className='flex flex-wrap justify-center  '>
-        
+    <div className="bg-gray-100 min-h-screen w-screen">
+      <Toaster />
 
-        {cartProducts.map((product, index) => (
-          <div key={product.id} className=" p-2 border border-gray-600 w-72 ">
-            <div className="overflow-hidden">
-              <img
-                src={product.image}
-                className="h-52 w-full   border-b-4 border-b-yellow-800 hover:cursor-pointer hover:scale-105 ease-in-out duration-300"
-                alt={product.title}
+      <div className="container mx-auto py-10">
+
+
+        <div className="mt-8 flex justify-end items-center">
+          <div className="text-right">
+            <p className="text-lg font-bold">Subtotal:</p>
+            <p className="text-lg font-bold">${totalCartPrice.toFixed(2)}</p>
+          </div>
+          <button className="ml-4 px-6 gap-4 py-2  bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
+            Checkout
+          </button>
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-7 ">
+
+          {cartProducts.map(product => (
+            <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden relative">
+              <img src={product.image} alt={product.title} className="w-full h-48 overflow-hidden  p-4 " />
+              <div className="p-4">
+                <h2 className="text-lg font-semibold">{product.title}</h2>
+                <p className="text-gray-600">${product.price.toFixed(2)}</p>
+
+                <div className="flex items-center mt-2">
+                  <button onClick={() => decrementQuantity(product.id)} className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-l">
+                    -
+                  </button>
+                  <input type="text" value={product.quantity} readOnly className="w-12 text-center bg-gray-100" />
+                  <button onClick={() => incrementQuantity(product.id)} className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-r">
+                    +
+                  </button>
+                </div>
+              </div>
+              <MdOutlineRemoveCircle 
+                className="absolute -top-3 right-0 m-4 text-3xl text-red-500 cursor-pointer hover:text-red-700" 
+                onClick={() => removeToCart(product.id)} 
               />
             </div>
-            <h1 className="font-bold mt-2">{product.title}</h1>
-            <p className="text-lg font-semibold mt-2">
-              Price : <code>{product.price}$</code>
-            </p>
-            <p>{product.reviews}</p>
-            <button onClick={() => removeToCart(product.id)} className="items-center px-4 py-2 border-2  hover:scale-105 transition duration-300 bg-stone-500 hover:bg-gray-100">
-              Remove from Cart
-            </button>
-          </div>
-        ))}
-        
+          ))}
+        </div>
       </div>
+      {cartProducts.length <= 0 && <div className='m-auto text-center font-semibold xl:text-xl'>No Products</div>}
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

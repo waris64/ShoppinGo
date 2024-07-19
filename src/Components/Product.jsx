@@ -2,65 +2,87 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BarLoader } from 'react-spinners';
 import { add } from '../store/cartSlice';
-import { getProducts } from '../store/productSlice';
+import { getProducts, getCategories, setFilter, clearFilter } from '../store/productSlice';
 import StatusCode from '../utils/StatusCode';
-import Toast, { Toaster } from "react-hot-toast";
+import Toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
-
-const notify = () => Toast.success("Product added");
 
 const Product = () => {
   const dispatch = useDispatch();
-  const { data: products, status } = useSelector(state => state.products);
-  // const cartProducts = useSelector(state => state.cart);
+  const { data: products, status, filter, categories } = useSelector(state => state.products);
 
   useEffect(() => {
+    dispatch(getCategories());
     dispatch(getProducts());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (filter) {
+      dispatch(getProducts(filter));
+    } else {
+      dispatch(getProducts());
+    }
+  }, [filter, dispatch]);
+
   const addToCart = (product) => {
     dispatch(add(product));
-    notify();
   };
 
   if (status === StatusCode.LOADING) {
-    return <>Loading ...</>;
+    return <BarLoader className='m-auto top-44' />;
   }
 
   if (status === StatusCode.ERROR) {
-    return <label className='m-auto'>Error in fetching the data from Api</label>;
+    return <label className='m-auto'>Error in fetching the data from API</label>;
   }
 
   return (
-    <>
+    <div className='flex flex-col'>
+      {/* <h1 className="text-center text-2xl font-bold my-6">Shop</h1> */}
       <Toaster />
-      {products.length > 0 ? (
-        <div className="flex flex-wrap flex-col lg:flex-row justify-center pt-6 px-5">
-          {products.map(product => (
-            // <Link to={`/product/${product.id}` } key={product.id}>
-              <div className="w-1/4   flex-wrap  p-2 border border-gray-600 " key={product.id}>
+      <div className='flex flex-col'>
+      <div className="flex justify-center space-x-2  mb-4">
+        {categories.map(category => (
+          <button
+            key={category}
+            onClick={() => dispatch(setFilter(category))}
+            className="text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded text-sm px-4 py-2"
+          >
+            {category.charAt(0).toUpperCase() + category.slice(1)}
+          </button>
+        ))}
+        <button
+          onClick={() => dispatch(clearFilter())}
+          className="text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2"
+        >
+          Clear Filter
+        </button>
+      </div>
 
-                <img
-                  src={product.image}
-                  className="h-52 w-full border-b-4 overflow-hidden border-b-yellow-800 hover:cursor-pointer hover:scale-105 ease-in-out duration-300"
-                  alt={product.title}
-                />
-
-                <h1 className="font-bold mt-2">{product.title}</h1>
-                <p className="text-lg font-semibold mt-2">
-                  Price: <code>{product.price}$</code>
-                </p>
-                <button onClick={() => addToCart(product)} className="items-center px-4 py-2 border-2 hover:scale-105 transition duration-300 bg-stone-500 hover:bg-gray-100">
-                  Add to Cart
-                </button>
-              </div>
-            // </Link>
-          ))}
-        </div>
-      ) : (
-        <BarLoader className='m-auto top-80' />
-      )}
-    </>
+      <div className="flex flex-wrap justify-center">
+        {products.map(product => (
+          <div className="w-64 p-4 m-2 border border-gray-300 rounded" key={product.id}>
+            <Link to={`/product/${product.id}`}>
+              <img
+                src={product.image}
+                className="h-52 w-full object-cover mb-2"
+                alt={product.title}
+              />
+              <h1 className="font-bold mt-2 text-lg">{product.title}</h1>
+              <p className="text-lg font-semibold mt-2">Price: ${product.price}</p>
+              <button
+                type="button"
+                onClick={() => addToCart(product)}
+                className="mt-2 text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded text-sm px-4 py-2"
+              >
+                Add to Cart
+              </button>
+            </Link>
+          </div>
+        ))}
+      </div>
+      </div>
+    </div>
   );
 };
 
