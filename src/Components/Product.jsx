@@ -33,15 +33,15 @@ const Product = () => {
   }
 
   if (status === StatusCode.ERROR) {
-    return <label className='m-auto'>Error in fetching the data from API</label>;
+    return <label className='m-auto'>Error in fetching the data </label>;
   }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col xl:flex-row'>
       {/* <h1 className="text-center text-2xl font-bold my-6">Shop</h1> */}
       <Toaster />
       <div className='flex flex-col'>
-      <div className="flex justify-center space-x-2  mb-4">
+      <div className="flex justify-center space-x-2  py-4 gap-y-44  ">
         {categories.map(category => (
           <button
             key={category}
@@ -75,7 +75,7 @@ const Product = () => {
                 onClick={() => addToCart(product)}
                 className="mt-2 text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded text-sm px-4 py-2"
               >
-                Add to Cart
+                Product Details
               </button>
             </Link>
           </div>
