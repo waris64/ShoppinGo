@@ -7,7 +7,6 @@ import { MdOutlineRemoveCircle } from "react-icons/md";
 const Cart = () => {
   const cartProducts = useSelector(state => state.cart);
   const dispatch = useDispatch();
-
   const removeToCart = (id) => {
     dispatch(remove(id));
     Toast.success("Product removed");
@@ -31,11 +30,11 @@ const Cart = () => {
 
 
         <div className="mt-8 flex justify-end items-center">
-          <div className="text-right">
+          <div className="text-right  ">
             <p className="text-lg font-bold">Subtotal:</p>
             <p className="text-lg font-bold">${totalCartPrice.toFixed(2)}</p>
           </div>
-          <button className="ml-4 px-6 gap-4 py-2  bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
+          <button className="ml-4 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-2">
             Checkout
           </button>
         </div>

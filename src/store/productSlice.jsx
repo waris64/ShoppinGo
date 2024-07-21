@@ -1,7 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, } from '@reduxjs/toolkit';
 import axios from 'axios';
 import StatusCode from '../utils/StatusCode';
-
   // Get  produts here 
   
 export const getProducts = createAsyncThunk('products/get', async (category = null) => {
@@ -13,10 +12,8 @@ export const getProducts = createAsyncThunk('products/get', async (category = nu
 // Get Categories here
 export const getCategories = createAsyncThunk('products/getCategories', async () => {
   const response = await axios.get('https://fakestoreapi.com/products/categories');
-  return response.data;
+  return response.data.reverse();
 });
-
-
 
 const initialState = {
   data: [],
@@ -52,7 +49,7 @@ const productSlice = createSlice({
         state.status = StatusCode.LOADING;
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.data = action.payload,
         state.status = StatusCode.IDLE;
       })
       .addCase(getProducts.rejected, (state) => {
