@@ -53,33 +53,33 @@ const Product = () => {
     <div className='flex flex-col '>
       <Toaster />
       <div className='flex flex-col'>
-        <div className="flex justify-center space-x-2 py-4 gap-y-44">
+        <div className="flex justify-center flex-col md:flex-row md:gap-x-3 px-10  py-4 md:py-4 md:gap-y-4 gap-y-4">
           {categories.map(category => (
             <Button
               size='small'
               variant='contained'
               key={category}
               onClick={() => dispatch(setFilter(category))}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
               >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </Button>
           ))}
-          <button
+          <Button
+            variant='contained'
             onClick={() => dispatch(clearFilter())}
-            className="text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2"
+            className="text-white  bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2"
           >
             Clear Filter
-          </button>
+          </Button>
         </div>
 
-        <div className="flex flex-wrap justify-center ">
+        <div className="flex flex-wrap justify-center  gap-x-8 gap-y-8 ">
           {products.map(product => (
-            <div className="w-64 p-4 m-2  transform transition-transform    border border-gray-300 rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-slate-500" key={product.id}>
+            <div className="w-64 p-4   transform transition-transform    border border-gray-300 rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-slate-500" key={product.id}>
               <Link to={`/product/${product.id}`}>
                 <img
                   src={product.image}
-                  className="h-52 w-full object-cover mb-2 overflow-hidden hover:scale-105 transition-all duration-700  border"
+                  className="h-52 w-full object-constai mb-2 overflow-hidden hover:scale-105 transition-all duration-700  border"
                   alt={product.title}
                 />  
                 <h1 className="font-bold mt-2 text-lg">{product.title}</h1>

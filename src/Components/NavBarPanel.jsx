@@ -13,7 +13,7 @@ const NavBarPanel = () => {
   const getPageTitle = (pathname) => {
     switch (pathname) {
       case '/':
-        return 'Dashboard';
+        return 'Shop';
       case '/cart':
         return 'Cart';
       case '/product':
@@ -35,7 +35,7 @@ const NavBarPanel = () => {
           <IoArrowBackSharp size={24} />
         </section>
       )}
-      
+
       {/* Page Title */}
       <h1 className='font-semibold text-2xl'>
         {getPageTitle(location.pathname)}

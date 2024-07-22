@@ -5,7 +5,8 @@ import { getProducts } from '../store/productSlice';
 import StatusCode from '../utils/StatusCode';
 import { add } from '../store/cartSlice';
 import Toast, { Toaster } from 'react-hot-toast';
-import { Rating } from '@mui/material';
+import { Button, Rating } from '@mui/material';
+
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -41,25 +42,23 @@ const SingleProduct = () => {
   }
 
   return (
-    <div className="flex items-center py-24">
+    <div className="flex items-center py-24 flex-col md:flex-row lg:px-4 md:px-4">
       <Toaster />
-      <img src={product.image} alt={product.title} className='size-96 cursor-pointer' />
-      <section className='flex-col w-3/5 pl-16'>
-        <h1 className='font-semibold text-4xl pb-5 '>{product.title}
-
-          &nbsp;
+      <img src={product.image} alt={product.title} className='size-52  lg:size-96 md:size-80 cursor-pointer border  p-4' />
+      <section className='flex-col  pl-16 text-sm md:text-lg pt-4 m-auto '>
+        <h1 className='font-semibold md:text-xl md:px-4  pb-5 text-sm '>{product.title}
         </h1>
         <p className='pb-2'>{product.description}</p>
           <Rating name="read-only" value={5} readOnly />
         <p className='font-semibold text-xl '>Price: ${product.price}</p>
         <section className='flex '>
-          <button
+          <Button
             type="button"
+            variant='contained'
             onClick={addToCart}
-            className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-8 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-2"
           >
             Buy Now
-          </button>
+          </Button>
         </section>
       </section>
     </div>

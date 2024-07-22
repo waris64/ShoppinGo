@@ -29,7 +29,7 @@ const Cart = () => {
       <div className="container mx-auto py-10">
 
 
-        <div className="mt-8 flex justify-end items-center">
+        <div className="mt-8 flex justify-end items-center ">
           <div className="text-right  ">
             <p className="text-lg font-bold">Subtotal:</p>
             <p className="text-lg font-bold">${totalCartPrice.toFixed(2)}</p>
@@ -41,19 +41,19 @@ const Cart = () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-7 ">
 
           {cartProducts.map(product => (
-            <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden relative">
-              <img src={product.image} alt={product.title} className="w-full h-48 overflow-hidden  p-4 " />
+            <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden relative  ">
+              <img src={product.image} alt={product.title} className="w-full size-56 overflow-hidden  p-4  " />
               <div className="p-4">
                 <h2 className="text-lg font-semibold">{product.title}</h2>
                 <p className="text-gray-600">${product.price.toFixed(2)}</p>
 
                 <div className="flex items-center mt-2">
-                  <button onClick={() => decrementQuantity(product.id)} className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-l">
-                    -
+                  <button onClick={() => decrementQuantity(product.id)} className="px-3 py-1 bg-red-500 hover:bg-gray-300 text-gray-700 rounded-l">
+                    Remove
                   </button>
-                  <input type="text" value={product.quantity} readOnly className="w-12 text-center bg-gray-100" />
-                  <button onClick={() => incrementQuantity(product.id)} className="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-r">
-                    +
+                  <input type="text" value={product.quantity} readOnly className="py-1 px-4 w-1/2  bg-gray-200 text-center " />
+                  <button onClick={() => incrementQuantity(product.id)} className="px-3 py-1 bg-green-500 hover:bg-gray-300 text-gray-700 rounded-r">
+                    Add
                   </button>
                 </div>
               </div>
