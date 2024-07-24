@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 const Product = () => {
   const dispatch = useDispatch();
   const { data: products, status, filter, categories } = useSelector(state => state.products);
-
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());

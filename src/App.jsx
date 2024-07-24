@@ -1,23 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from "./Components/Dashboard";
-import RootLayout from './Components/RootLayout';
-import Cart from "./Components/Cart";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import LandingPage from "./pages/LandingPage/Landing";
 import SingleProduct from "./Components/SingleProduct";
 
 function App() {
-  
   return (
-    
-    <Router>
-      <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/product/:id" element={<SingleProduct />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/product/:id" element={<SingleProduct />} /> 
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 
