@@ -9,8 +9,6 @@ const LandingPage = () => {
     <div>
       <RootLayout />
       <Dashboard />
-      <Cart />
-      <SingleProduct />
     </div>
   );
 };

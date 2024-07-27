@@ -16,10 +16,7 @@ const cartSlice = createSlice({
       }
     },
     remove: (state, action) => {
-      const index = state.findIndex(item => item.id === action.payload);
-      if (index !== -1) {
-        state.splice(index, 1);
-      }
+      return state.filter(item => item.id !== action.payload);
     },
     increment: (state, action) => {
       const existingProduct = state.find(item => item.id === action.payload);
