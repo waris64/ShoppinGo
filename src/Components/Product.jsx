@@ -4,9 +4,10 @@ import { add } from '../store/cartSlice';
 import { getProducts, getCategories, setFilter, clearFilter } from '../store/productSlice';
 import StatusCode from '../utils/StatusCode';
 import Toast, { Toaster } from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import Button from '@mui/material/Button';
+
 
 
 const Product = () => {
@@ -85,7 +86,6 @@ const Product = () => {
                 <p className="text-lg font-semibold mt-2">Price: ${product.price}</p>
                 <button
                   type="button"
-                  onClick={() => addToCart(product)}
                   className="text-white bg-gray-800  shadow-red-900	 hover:bg-gray-900 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-8 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-2"
                   >
                     View Details

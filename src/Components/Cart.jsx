@@ -6,7 +6,6 @@ import { MdOutlineRemoveCircle } from "react-icons/md";
 
 const Cart = () => {
   const cartProducts = useSelector(state => state.cart);
-  console.log(cartProducts)
   const dispatch = useDispatch();
   const removeToCart = (id) => {
     dispatch(remove(id));

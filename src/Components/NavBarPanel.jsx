@@ -42,7 +42,7 @@ const NavBarPanel = () => {
       </h1>
 
       {/* Cart Icon with item count */}
-      <span className='relative'>
+      <span className='absolute top-4 right-4 flex items-center cursor-pointer'>
         <Link to="/cart">
           <CiShoppingCart className='text-2xl text-gray-600' />
           <span className='absolute -top-2 -right-2 bg-red-600 text-white rounded-full px-2 py-1 text-xs'>

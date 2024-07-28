@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProducts } from '../store/productSlice';
 import StatusCode from '../utils/StatusCode';
 import { add } from '../store/cartSlice';
 import Toast, { Toaster } from 'react-hot-toast';
 import { Button, Rating } from '@mui/material';
 import { CiShoppingCart } from 'react-icons/ci';
+import InnerImageZoom from 'react-inner-image-zoom';
+import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 
 const SingleProduct = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const product = useSelector((state) =>
     state.products.data.find((product) => product.id === parseInt(id))
@@ -21,7 +23,8 @@ const SingleProduct = () => {
 
   // Retrieve cart items and calculate the total number of items in the cart
   const cartProducts = useSelector((state) => state.cart);
-  const itemCount = cartProducts.reduce((total, product) => total + product.quantity, 0);
+  const currentProductInCart = cartProducts.find((item) => item.id === parseInt(id));
+  const currentProductCount = currentProductInCart ? currentProductInCart.quantity : 0;
 
   const addToCart = () => {
     dispatch(add(product));
@@ -57,14 +60,19 @@ const SingleProduct = () => {
       {/* Cart Icon with Navigation */}
       <div className="absolute top-4 right-4 flex items-center cursor-pointer" onClick={goToCart}>
         <CiShoppingCart className="text-2xl" />
-        {itemCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-1">
-            {itemCount}
-          </span>
-        )}
+        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-1">
+          {currentProductCount}
+        </span>
       </div>
 
-      <img src={product.image} alt={product.title} className='size-52 lg:size-96 md:size-80 cursor-pointer border p-4' />
+      <InnerImageZoom
+        src={product.image}
+        zoomSrc={product.image}
+        alt={product.title}
+        className='cursor-pointer border p-4 size-96 object-contain pb-44'
+        zoomType="hover"
+      />
+
       <section className='flex-col pl-16 text-sm md:text-lg pt-4 m-auto'>
         <h1 className='font-semibold md:text-xl md:px-4 pb-5 text-sm'>{product.title}</h1>
         <p className='pb-2'>{product.description}</p>
