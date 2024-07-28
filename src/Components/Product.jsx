@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../store/cartSlice';
 import { getProducts, getCategories, setFilter, clearFilter } from '../store/productSlice';
 import StatusCode from '../utils/StatusCode';
 import Toast, { Toaster } from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
 import Button from '@mui/material/Button';
-
-
 
 const Product = () => {
   const dispatch = useDispatch();
   const { data: products, status, filter, categories } = useSelector(state => state.products);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
@@ -26,8 +26,14 @@ const Product = () => {
     }
   }, [filter, dispatch]);
 
-  const addToCart = (product) => {
-    dispatch(add(product));
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    dispatch(setFilter(category));
+  };
+
+  const handleClearFilter = () => {
+    setSelectedCategory(null);
+    dispatch(clearFilter());
   };
 
   if (status === StatusCode.LOADING) {
@@ -53,42 +59,46 @@ const Product = () => {
     <div className='flex flex-col '>
       <Toaster />
       <div className='flex flex-col'>
-        <div className="flex justify-center flex-col md:flex-row md:gap-x-3 px-10  py-4 md:py-4 md:gap-y-4 gap-y-4">
+        <div className="flex justify-center flex-col md:flex-row md:gap-x-3 px-10 py-4 md:py-4 md:gap-y-4 gap-y-4">
           {categories.map(category => (
             <Button
               size='small'
               variant='contained'
               key={category}
-              onClick={() => dispatch(setFilter(category))}
-              >
+              onClick={() => handleCategoryClick(category)}
+              style={{
+                backgroundColor: selectedCategory === category ? '#1f2937' : '',
+                color: selectedCategory === category ? 'white' : ''
+              }}
+            >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </Button>
           ))}
           <Button
             variant='contained'
-            onClick={() => dispatch(clearFilter())}
-            className="text-white  bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2"
+            onClick={handleClearFilter}
+            className="text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-4 py-2"
           >
             Clear Filter
           </Button>
         </div>
 
-        <div className="flex flex-wrap justify-center  gap-x-8 gap-y-8 ">
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-8">
           {products.map(product => (
-            <div className="w-64 p-4   transform transition-transform    border border-gray-300 rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-slate-500" key={product.id}>
+            <div className="w-64 p-4 transform transition-transform border border-gray-300 rounded hover:scale-105 duration-500 hover:shadow-lg hover:shadow-slate-500" key={product.id}>
               <Link to={`/product/${product.id}`}>
                 <img
                   src={product.image}
-                  className="h-52 w-full object-constai mb-2 overflow-hidden hover:scale-105 transition-all duration-700  border"
+                  className="h-52 w-full object-contain mb-2 overflow-hidden hover:scale-105 transition-all duration-700 border"
                   alt={product.title}
                 />  
                 <h1 className="font-bold mt-2 text-lg">{product.title}</h1>
                 <p className="text-lg font-semibold mt-2">Price: ${product.price}</p>
                 <button
                   type="button"
-                  className="text-white bg-gray-800  shadow-red-900	 hover:bg-gray-900 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-8 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-2"
-                  >
-                    View Details
+                  className="text-white bg-gray-800 shadow-red-900 hover:bg-gray-900 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded text-sm px-8 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 mt-2"
+                >
+                  View Details
                 </button>
               </Link>
             </div>
