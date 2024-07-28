@@ -78,15 +78,15 @@ const SingleProduct = () => {
         <p className='pb-2'>{product.description}</p>
         <Rating name="read-only" value={5} readOnly />
         <p className='font-semibold text-xl'>Price: ${product.price}</p>
-        <section className='flex'>
-          <Button
-            type="button"
-            variant='contained'
-            onClick={addToCart}
-          >
-            Buy Now
-          </Button>
-        </section>
+
+        <Button
+          type="button"
+          variant='contained'
+          onClick={addToCart}
+        >
+          Buy Now
+        </Button>
+
       </section>
     </div>
   );
