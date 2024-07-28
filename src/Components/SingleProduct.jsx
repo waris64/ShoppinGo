@@ -69,7 +69,7 @@ const SingleProduct = () => {
         src={product.image}
         zoomSrc={product.image}
         alt={product.title}
-        className='cursor-pointer border p-4w-[94vw]'
+        className='cursor-pointer border p-4 '
         zoomType="hover"
       />
 
