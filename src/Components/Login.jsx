@@ -36,6 +36,7 @@ const Login = () => {
       <form onSubmit={handleLogin} className="w-1/3 m-auto flex flex-col rounded gap-y-5 py-8  border px-5 bg-slate-100 mt-16">
         <TextField
           variant='standard'
+          placeholder='Enter your email'
           className="px-2 py-1 font-semibold "
           type="email"
           name="email"
@@ -52,6 +53,7 @@ const Login = () => {
           name="password"
           id="password"
           placeholder="Password"
+          autoComplete='true'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
