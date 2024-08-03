@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged , updateProfile} from "firebase/auth";
 import { auth } from '../firebase.config';
+import toast from "react-hot-toast";
 
 export const registerUser = createAsyncThunk(
     'auth/registerUser',
@@ -32,7 +33,7 @@ export const loginUser = createAsyncThunk(
                 displayName: user.displayName
             };
         } catch (error) {
-            return rejectWithValue(error.message);
+            return rejectWithValue(<label className="text-center font-semibold">{error.message}</label>);
         }
     }
 );
@@ -59,7 +60,7 @@ export const checkAuthState = createAsyncThunk(
                 } else {
                     resolve(null);
                 }
-            }, (error) => reject(rejectWithValue(error.message)));
+            }, (error) => reject(<label className="text-center font-semibold">{error.message}</label>));
         });
     }
 );
