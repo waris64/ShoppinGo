@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { registerUser } from "../store/authSlice";
 import { auth } from "../firebase.config";
 import { FormControl, TextField, Button } from "@mui/material";
+
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ function Register() {
     try {
       const signInMethods = await fetchSignInMethodsForEmail(auth, email);
       if (signInMethods.length > 0) {
-        alert("User already registered");
+        toast.error("User already registered");
         return;
       }
 
@@ -38,9 +39,9 @@ function Register() {
 
   return (
     <>
-      <h1 className="text-3xl m-auto text-center pt-8"> Registration Page</h1>
+      <h1 className="text-3xl text-center pt-10">Register  <label className='text-blue-500 under'>Here</label> </h1>
 
-      <form onSubmit={handleRegister} className="flex flex-col w-1/3 m-auto space-y-7 pt-16 my-auto ">
+      <form onSubmit={handleRegister} className="flex flex-col w-1/3 rounded mt-16 m-auto space-y-7 pt-16 my-auto bg-slate-100 p-4">
         <TextField
           type="text"
           variant="standard"
@@ -69,9 +70,10 @@ function Register() {
           required
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button variant="contained" className="" onClick={handleRegister} type="submit">
+        <Button variant="outlined" className="" onClick={handleRegister} type="submit">
           Sign Up
         </Button>
+        <Link to="/login" className='text-center underline text-blue-500'> Login here  </Link>
         {error && <>Error in registering</>}
       </form>
     </>

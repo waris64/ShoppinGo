@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../store/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Button, TextField } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
@@ -32,8 +32,8 @@ const Login = () => {
 
   return (
     <>
-      <h1 className="text-3xl text-center pt-3">Sign In Page</h1>
-      <form  onSubmit={handleLogin} className="w-1/3 top-5 m-auto flex flex-col gap-y-5 py-10  border px-5 bg-slate-100 mt-24">
+      <h1 className="text-3xl text-center pt-10">Sign <label className='text-blue-500'>In</label> </h1>
+      <form onSubmit={handleLogin} className="w-1/3 m-auto flex flex-col rounded gap-y-5 py-8  border px-5 bg-slate-100 mt-16">
         <TextField
           variant='standard'
           className="px-2 py-1 font-semibold "
@@ -60,7 +60,9 @@ const Login = () => {
           variant="outlined"
           type="submit"
           onClick={handleLogin}
-          >Login</Button>
+        >Login</Button>
+        <Link to="/register" className='text-center underline text-blue-500'> Register here  </Link>
+
         {error && <p>{error}</p>}
       </form>
     </>
