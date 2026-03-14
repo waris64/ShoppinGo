@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ element }) => {
   const { user } = useSelector((state) => state.auth);
-  
-  return user ? element : <Navigate to="/login" />;
+
+  // Authentication disabled for now
+  return element;
 };
 
 export default ProtectedRoute;

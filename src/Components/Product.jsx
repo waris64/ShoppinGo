@@ -13,8 +13,8 @@ const Product = () => {
   const dispatch = useDispatch();
   const { data: products, status, filter, categories } = useSelector(state => state.products);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const { user } = useSelector((state) => state.auth.user);
-  const cartProducts=useSelector(state=>state.cart)
+  const { user } = useSelector((state) => state.auth);
+  const cartProducts = useSelector(state => state.cart)
   useEffect(() => {
     dispatch(getCategories());
     dispatch(getProducts());
@@ -28,7 +28,7 @@ const Product = () => {
     }
   }, [filter, dispatch]);
 
- 
+
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -61,12 +61,12 @@ const Product = () => {
 
   return (
     <div className='flex flex-col '>
-       
+
       <Toaster />
       <div className='flex flex-col'>
-        
+
         <div className="flex justify-center flex-col md:flex-row md:gap-x-3 px-10 py-4 md:py-4 md:gap-y-4 gap-y-4">
-       
+
           {categories.map(category => (
             <Button
               size='small'
@@ -88,7 +88,7 @@ const Product = () => {
           >
             Clear Filter
           </Button>
-          
+
         </div>
 
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-8">
